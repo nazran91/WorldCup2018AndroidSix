@@ -1,5 +1,6 @@
 package com.aiub.worldcup2018androidsix;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.aiub.worldcup2018androidsix.Activities.SettingsActivity;
 import com.aiub.worldcup2018androidsix.NavigationDrawerFragments.OneFragment;
 import com.aiub.worldcup2018androidsix.NavigationDrawerFragments.TwoFragment;
 
@@ -86,21 +88,30 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_one) {
+        if (id == R.id.nav_schedule) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.framlayout, new OneFragment());
             fragmentTransaction.commit();
-        } else if (id == R.id.nav_two) {
+        } else if (id == R.id.nav_matches) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.framlayout, new TwoFragment());
             fragmentTransaction.commit();
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_tables) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_scorer) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_teams) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_stadiums) {
+
+        } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_privacy) {
+
+        } else if (id == R.id.nav_recommendation) {
+
+        } else if (id == R.id.nav_rate_app) {
 
         }
 

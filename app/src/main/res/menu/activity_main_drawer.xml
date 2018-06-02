@@ -5,34 +5,60 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_one"
+            android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_menu_camera"
-            android:title="One" />
+            android:title="@string/nav_schedule_title" />
         <item
-            android:id="@+id/nav_two"
+            android:id="@+id/nav_matches"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Two" />
+            android:title="@string/nav_matches_title" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_tables"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="@string/nav_tables_title" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/nav_competition_title">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_scorer"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/nav_scorer_title" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_teams"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="@string/nav_teams_title" />
+            <item
+                android:id="@+id/nav_stadiums"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/nav_stadiums_title" />
         </menu>
     </item>
+    <item android:title="@string/nav_settings_title">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/nav_settings_title" />
+            <item
+                android:id="@+id/nav_privacy"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/nav_privacy_title" />
+        </menu>
+    </item>
+
+    <item android:title="@string/nav_more_title">
+        <menu>
+            <item
+                android:id="@+id/nav_recommendation"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/nav_recommendation_title" />
+            <item
+                android:id="@+id/nav_rate_app"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/nav_rate_app_title" />
+        </menu>
+    </item>
+
 
 </menu>
