@@ -22,6 +22,8 @@ public class NotificationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
 
+        getSupportActionBar().setTitle("Notifications");
+
         notificationsListView = findViewById(R.id.notificationsListView);
 
         makeDataReady();
@@ -43,7 +45,7 @@ public class NotificationsActivity extends AppCompatActivity {
         item = new NotificationItem(
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjiDQbfTw6z7WuEe01sucUbNvKhIGxz1f_JpR-2CJwp7MCX6zJ",
                 "Brazil",
-                true);
+                false);
         dataList.add(item);
 
         item = new NotificationItem(
@@ -51,6 +53,5 @@ public class NotificationsActivity extends AppCompatActivity {
                 "Germany",
                 true);
         dataList.add(item);
-
     }
 }

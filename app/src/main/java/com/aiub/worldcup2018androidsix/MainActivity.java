@@ -1,10 +1,8 @@
 package com.aiub.worldcup2018androidsix;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,8 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.aiub.worldcup2018androidsix.Activities.SettingsActivity;
-import com.aiub.worldcup2018androidsix.NavigationDrawerFragments.OneFragment;
+import com.aiub.worldcup2018androidsix.NavigationDrawerFragments.DrawerMatchesFragment;
+import com.aiub.worldcup2018androidsix.NavigationDrawerFragments.SettingsFragment;
 import com.aiub.worldcup2018androidsix.NavigationDrawerFragments.TwoFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_schedule) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.framlayout, new OneFragment());
+            fragmentTransaction.replace(R.id.framlayout, new DrawerMatchesFragment());
             fragmentTransaction.commit();
         } else if (id == R.id.nav_matches) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -105,8 +103,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_stadiums) {
 
         } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intent);
+            FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.framlayout, new SettingsFragment());
+            fragmentTransaction.commit();
+            getSupportActionBar().setTitle("Settings");
         } else if (id == R.id.nav_privacy) {
 
         } else if (id == R.id.nav_recommendation) {
