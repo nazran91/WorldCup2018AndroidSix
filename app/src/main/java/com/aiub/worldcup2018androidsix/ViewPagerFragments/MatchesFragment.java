@@ -36,5 +36,4 @@ public class MatchesFragment extends Fragment {
 
         return view;
     }
-
 }
