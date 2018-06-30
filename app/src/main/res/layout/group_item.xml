@@ -34,42 +34,46 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/flagOne"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/groupName" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/flagTwo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/flagThree"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/flagOne"
                 app:layout_constraintTop_toBottomOf="@+id/groupName" />
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/flagOne"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/flagTwo"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/groupName" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/flagThree"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/flagFour"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/flagTwo"
                 app:layout_constraintTop_toBottomOf="@+id/groupName" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/flagFour"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/flagThree"
                 app:layout_constraintTop_toBottomOf="@+id/groupName" />
 
