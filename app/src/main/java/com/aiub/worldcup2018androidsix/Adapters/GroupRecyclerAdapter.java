@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -57,11 +58,15 @@ public class GroupRecyclerAdapter extends
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-
+        holder.groupName.setText("Group A");
+        Picasso.get().load(groupList.get(position).get(0).getIcon()).into(holder.flagOne);
+        Picasso.get().load(groupList.get(position).get(1).getIcon()).into(holder.flagTwo);
+        Picasso.get().load(groupList.get(position).get(2).getIcon()).into(holder.flagThree);
+        Picasso.get().load(groupList.get(position).get(3).getIcon()).into(holder.flagFour);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return groupList.size();
     }
 }

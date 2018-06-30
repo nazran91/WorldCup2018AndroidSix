@@ -3,14 +3,14 @@ package com.aiub.worldcup2018androidsix.ModelClasses;
 public class Team {
 
     private int id;
-    private String icon, name, country;
+    private String icon, name, fifaCode;
 
     //ALT + Insert
-    public Team(int id, String icon, String name, String country) {
+    public Team(int id, String icon, String name, String fifaCode) {
         this.id = id;
         this.icon = icon;
         this.name = name;
-        this.country = country;
+        this.fifaCode = fifaCode;
     }
 
     public int getId() {
@@ -37,11 +37,11 @@ public class Team {
         this.name = name;
     }
 
-    public String getCountry() {
-        return country;
+    public String getfifaCode() {
+        return fifaCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setfifaCode(String fifaCode) {
+        this.fifaCode = fifaCode;
     }
 }
