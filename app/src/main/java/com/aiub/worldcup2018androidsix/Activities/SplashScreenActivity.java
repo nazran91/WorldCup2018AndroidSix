@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.aiub.worldcup2018androidsix.Database.DatabaseHelper;
+import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,11 +23,14 @@ public class SplashScreenActivity extends AppCompatActivity {
     private static final String TAG = SplashScreenActivity.class.getSimpleName();
     private String API_URL =
             "https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json";
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        databaseHelper = new DatabaseHelper(SplashScreenActivity.this);
 
         getDataFromAPI();
     }
@@ -63,6 +68,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                         String name = teamsObject.getString("name");
                         String fifaCode = teamsObject.getString("fifaCode");
 
+                        Team team = new Team(id, name, fifaCode);
+                        databaseHelper.addTeam(team);
                     }
 
                     JSONObject groups = response.getJSONObject("groups");

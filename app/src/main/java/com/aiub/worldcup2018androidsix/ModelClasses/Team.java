@@ -13,6 +13,12 @@ public class Team {
         this.fifaCode = fifaCode;
     }
 
+    public Team(int id, String name, String fifaCode){
+        this.id = id;
+        this.name = name;
+        this.fifaCode = fifaCode;
+    }
+
     public int getId() {
         return id;
     }
