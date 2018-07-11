@@ -1,10 +1,12 @@
 package com.aiub.worldcup2018androidsix.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.aiub.worldcup2018androidsix.Database.DatabaseHelper;
+import com.aiub.worldcup2018androidsix.MainActivity;
 import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
 import com.android.volley.Request;
@@ -18,12 +20,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     private static final String TAG = SplashScreenActivity.class.getSimpleName();
     private String API_URL =
             "https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json";
     private DatabaseHelper databaseHelper;
+    private String[] groupNames = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
+    private List<Team> teamList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +38,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         databaseHelper = new DatabaseHelper(SplashScreenActivity.this);
-
-        getDataFromAPI();
+        teamList = databaseHelper.getAllTeams();
+        if (teamList.size() == 0)
+            getDataFromAPI();
+        else {
+            Intent intent = new Intent(SplashScreenActivity.this,
+                    MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void getDataFromAPI() {
@@ -49,26 +62,30 @@ public class SplashScreenActivity extends AppCompatActivity {
                     JSONArray stadiums = response.getJSONArray("stadiums");
 
                     for (int i = 0; i < stadiums.length(); i++) {
-                         JSONObject stadiumObject = stadiums.getJSONObject(i);
+                        JSONObject stadiumObject = stadiums.getJSONObject(i);
 
-                         int id = stadiumObject.getInt("id");
-                         String name = stadiumObject.getString("name");
-                         String city = stadiumObject.getString("city");
-                         double lat = stadiumObject.getDouble("lat");
-                         double lng = stadiumObject.getDouble("lng");
-                         String image = stadiumObject.getString("image");
+                        int id = stadiumObject.getInt("id");
+                        String name = stadiumObject.getString("name");
+                        String city = stadiumObject.getString("city");
+                        double lat = stadiumObject.getDouble("lat");
+                        double lng = stadiumObject.getDouble("lng");
+                        String image = stadiumObject.getString("image");
                     }
 
                     JSONArray teams = response.getJSONArray("teams");
 
-                    for (int i = 0; i < teams.length(); i++){
+                    int j = 0;
+                    for (int i = 0; i < teams.length(); i++) {
                         JSONObject teamsObject = teams.getJSONObject(i);
 
                         int id = teamsObject.getInt("id");
                         String name = teamsObject.getString("name");
                         String fifaCode = teamsObject.getString("fifaCode");
 
-                        Team team = new Team(id, name, fifaCode);
+                        if (i % 4 == 0 && i != 0) {
+                            j++;
+                        }
+                        Team team = new Team(id, name, fifaCode, groupNames[j], null);
                         databaseHelper.addTeam(team);
                     }
 
@@ -78,7 +95,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     JSONArray matches = groupObject.getJSONArray("matches");
 
-                    for (int i = 0; i < matches.length(); i++){
+                    for (int i = 0; i < matches.length(); i++) {
                         JSONObject matchObject = matches.getJSONObject(i);
 
                         String name = matchObject.getString("name");
@@ -91,6 +108,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                         boolean finished = matchObject.getBoolean("finished");
                         int matchday = matchObject.getInt("matchday");
                     }
+
+                    Intent intent = new Intent(SplashScreenActivity.this,
+                            MainActivity.class);
+                    startActivity(intent);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

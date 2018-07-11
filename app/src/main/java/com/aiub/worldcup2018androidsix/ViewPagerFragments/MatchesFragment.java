@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aiub.worldcup2018androidsix.Adapters.GroupRecyclerAdapter;
+import com.aiub.worldcup2018androidsix.Database.DatabaseHelper;
 import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
 
@@ -25,6 +26,8 @@ public class MatchesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<List<Team>> groupList = new ArrayList<>();
+    private DatabaseHelper databaseHelper;
+    private List<Team> teamList = new ArrayList<>();
 
     public MatchesFragment() {
         // Required empty public constructor
@@ -33,6 +36,9 @@ public class MatchesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        databaseHelper = new DatabaseHelper(getActivity());
+        teamList = databaseHelper.getAllTeams();
 
         prepareData();
     }

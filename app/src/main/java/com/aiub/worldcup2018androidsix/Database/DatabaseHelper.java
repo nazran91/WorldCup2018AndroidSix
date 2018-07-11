@@ -2,11 +2,15 @@ package com.aiub.worldcup2018androidsix.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.aiub.worldcup2018androidsix.ModelClasses.Team;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -35,7 +39,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String CREATE_TEAM_TABLE = "CREATE TABLE " + TEAM_TABLE_NAME + " ("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TEAM_ID + " INTEGER, "
-
                 + TEAM_NAME + " TEXT, "
                 + TEAM_FLAG_URL + " TEXT DEFAULT NULL, "
                 + TEAM_FIFA_CODE + " TEXT, "
@@ -56,10 +59,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(TEAM_ID, team.getId());
         contentValues.put(TEAM_NAME, team.getName());
         contentValues.put(TEAM_FIFA_CODE, team.getfifaCode());
+        contentValues.put(TEAM_GROUP_NAME, team.getGroupName());
+        contentValues.put(TEAM_FLAG_URL, team.getIcon());
 
         long rowId = sqLiteDatabase.insert(TEAM_TABLE_NAME, null, contentValues);
         Log.e(TAG, "row ID " + rowId);
 
         sqLiteDatabase.close();
+    }
+
+    public List<Team> getAllTeams() {
+        List<Team> teamList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + TEAM_TABLE_NAME + " ORDER BY " + TEAM_ID;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Team team = new Team();
+                team.setId(cursor.getInt(cursor.getColumnIndex(TEAM_ID)));
+                team.setName(cursor.getString(cursor.getColumnIndex(TEAM_NAME)));
+                team.setfifaCode(cursor.getString(cursor.getColumnIndex(TEAM_FIFA_CODE)));
+                team.setGroupName(cursor.getString(cursor.getColumnIndex(TEAM_GROUP_NAME)));
+                team.setIcon(cursor.getString(cursor.getColumnIndex(TEAM_FLAG_URL)));
+
+                teamList.add(team);
+            } while (cursor.moveToNext());
+        }
+
+        sqLiteDatabase.close();
+
+        return teamList;
     }
 }
