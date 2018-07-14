@@ -20,7 +20,9 @@
         <activity
             android:name=".Activities.NotificationsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.SplashScreenActivity">
+        <activity
+            android:name=".Activities.SplashScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

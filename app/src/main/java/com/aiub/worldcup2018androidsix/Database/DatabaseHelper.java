@@ -94,4 +94,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return teamList;
     }
+
+    public void updateFlagUrl(int id, String url) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TEAM_FLAG_URL, url);
+
+        sqLiteDatabase.update(TEAM_TABLE_NAME, contentValues,
+                TEAM_ID + " = ?", new String[]{"" + id});
+
+        sqLiteDatabase.close();
+    }
+
+    public List<Team> getTeamsByGroup(String groupName) {
+        List<Team> group = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + TEAM_TABLE_NAME + " WHERE "
+                + TEAM_GROUP_NAME + " = '" + groupName + "' ORDER BY " + TEAM_ID;
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Team team = new Team();
+                team.setId(cursor.getInt(cursor.getColumnIndex(TEAM_ID)));
+                team.setName(cursor.getString(cursor.getColumnIndex(TEAM_NAME)));
+                team.setfifaCode(cursor.getString(cursor.getColumnIndex(TEAM_FIFA_CODE)));
+                team.setGroupName(cursor.getString(cursor.getColumnIndex(TEAM_GROUP_NAME)));
+                team.setIcon(cursor.getString(cursor.getColumnIndex(TEAM_FLAG_URL)));
+
+                group.add(team);
+            } while (cursor.moveToNext());
+        }
+        sqLiteDatabase.close();
+
+        return group;
+    }
 }

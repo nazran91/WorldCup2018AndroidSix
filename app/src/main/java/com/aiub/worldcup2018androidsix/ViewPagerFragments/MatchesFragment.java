@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class MatchesFragment extends Fragment {
     private List<List<Team>> groupList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
     private List<Team> teamList = new ArrayList<>();
+    private String[] groupNames = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
 
     public MatchesFragment() {
         // Required empty public constructor
@@ -40,7 +42,21 @@ public class MatchesFragment extends Fragment {
         databaseHelper = new DatabaseHelper(getActivity());
         teamList = databaseHelper.getAllTeams();
 
-        prepareData();
+        prepareDataFromSQLite();
+        //prepareData();
+    }
+
+    private void prepareDataFromSQLite() {
+        for (int i = 0; i < groupNames.length; i++) {
+
+            List<Team> group = new ArrayList();
+
+            group = databaseHelper.getTeamsByGroup(groupNames[i]);
+
+            groupList.add(group);
+
+            Log.e("GroupName: ", groupNames[i]);
+        }
     }
 
     @Override
@@ -63,7 +79,6 @@ public class MatchesFragment extends Fragment {
 
 
     private void prepareData() {
-
         List<Team> group = new ArrayList();
         Team team = new Team(1, "https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/23px-Flag_of_Russia.svg.png", "Russia", "RUS");
         group.add(team);
