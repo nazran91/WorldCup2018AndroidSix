@@ -24,39 +24,8 @@ import java.util.List;
  */
 public class MatchesFragment extends Fragment {
 
-
-    private RecyclerView recyclerView;
-    private List<List<Team>> groupList = new ArrayList<>();
-    private DatabaseHelper databaseHelper;
-    private List<Team> teamList = new ArrayList<>();
-    private String[] groupNames = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
-
     public MatchesFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        databaseHelper = new DatabaseHelper(getActivity());
-        teamList = databaseHelper.getAllTeams();
-
-        prepareDataFromSQLite();
-        //prepareData();
-    }
-
-    private void prepareDataFromSQLite() {
-        for (int i = 0; i < groupNames.length; i++) {
-
-            List<Team> group = new ArrayList();
-
-            group = databaseHelper.getTeamsByGroup(groupNames[i]);
-
-            groupList.add(group);
-
-            Log.e("GroupName: ", groupNames[i]);
-        }
     }
 
     @Override
@@ -65,60 +34,7 @@ public class MatchesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_matches, container, false);
 
-        recyclerView = view.findViewById(R.id.groupRecyclerView);
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        GroupRecyclerAdapter groupRecyclerAdapter =
-                new GroupRecyclerAdapter(groupList);
-        recyclerView.setAdapter(groupRecyclerAdapter);
 
         return view;
-    }
-
-
-    private void prepareData() {
-        List<Team> group = new ArrayList();
-        Team team = new Team(1, "https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/23px-Flag_of_Russia.svg.png", "Russia", "RUS");
-        group.add(team);
-
-        team = new Team(2,
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/23px-Flag_of_Saudi_Arabia.svg.png",
-                "Saudi Arabia", "KSA");
-        group.add(team);
-
-        team = new Team(3,
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/23px-Flag_of_Egypt.svg.png",
-                "Egypt", "EGY");
-        group.add(team);
-
-        team = new Team(4,
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/23px-Flag_of_Uruguay.svg.png",
-                "Uruguay", "URU");
-        group.add(team);
-
-        groupList.add(group);
-
-        group = new ArrayList();
-        team = new Team(5, "https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/23px-Flag_of_Russia.svg.png", "Russia", "RUS");
-        group.add(team);
-
-        team = new Team(6,
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/23px-Flag_of_Saudi_Arabia.svg.png",
-                "Saudi Arabia", "KSA");
-        group.add(team);
-
-        team = new Team(7,
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/23px-Flag_of_Egypt.svg.png",
-                "Egypt", "EGY");
-        group.add(team);
-
-        team = new Team(8,
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/23px-Flag_of_Uruguay.svg.png",
-                "Uruguay", "URU");
-        group.add(team);
-
-        groupList.add(group);
     }
 }

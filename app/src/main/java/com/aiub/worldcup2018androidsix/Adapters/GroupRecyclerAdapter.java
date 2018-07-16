@@ -1,6 +1,11 @@
 package com.aiub.worldcup2018androidsix.Adapters;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiub.worldcup2018androidsix.ModelClasses.Team;
+import com.aiub.worldcup2018androidsix.NavigationDrawerFragments.GroupDetailsFragment;
 import com.aiub.worldcup2018androidsix.R;
 import com.squareup.picasso.Picasso;
 
@@ -19,9 +25,13 @@ public class GroupRecyclerAdapter extends
         RecyclerView.Adapter<GroupRecyclerAdapter.MyViewHolder> {
 
     private List<List<Team>> groupList;
+    private String[] groupNames;
+    private Context context;
 
-    public GroupRecyclerAdapter(List<List<Team>> groupList) {
+    public GroupRecyclerAdapter(Context context, List<List<Team>> groupList, String[] groupNames) {
         this.groupList = groupList;
+        this.groupNames = groupNames;
+        this.context = context;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -58,11 +68,25 @@ public class GroupRecyclerAdapter extends
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.groupName.setText("Group A");
+        final int index = position;
+        holder.groupName.setText("Group " + groupNames[position]);
         Picasso.get().load(groupList.get(position).get(0).getIcon()).into(holder.flagOne);
         Picasso.get().load(groupList.get(position).get(1).getIcon()).into(holder.flagTwo);
         Picasso.get().load(groupList.get(position).get(2).getIcon()).into(holder.flagThree);
         Picasso.get().load(groupList.get(position).get(3).getIcon()).into(holder.flagFour);
+
+        holder.matchesText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction =
+                        ((AppCompatActivity) context).getSupportFragmentManager()
+                                .beginTransaction();
+                fragmentTransaction.replace(R.id.framlayout, new GroupDetailsFragment());
+                fragmentTransaction.commit();
+                ((AppCompatActivity) context)
+                        .getSupportActionBar().setTitle("Group " + groupNames[index]);
+            }
+        });
     }
 
     @Override
