@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import com.aiub.worldcup2018androidsix.Database.DatabaseHelper;
 import com.aiub.worldcup2018androidsix.MainActivity;
+import com.aiub.worldcup2018androidsix.ModelClasses.MatchModel;
 import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
 import com.android.volley.Request;
@@ -91,7 +92,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                             MainActivity.class);
                     startActivity(intent);
                 }
-            }, 1000);
+            }, 500);
         }
     }
 
@@ -140,22 +141,30 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     JSONObject groups = response.getJSONObject("groups");
 
-                    JSONObject groupObject = groups.getJSONObject("a");
+                    for (int i = 0; i < groupNames.length; i++) {
+                        String groupName = groupNames[i].toLowerCase();
 
-                    JSONArray matches = groupObject.getJSONArray("matches");
+                        JSONObject groupObject = groups.getJSONObject(groupName);
 
-                    for (int i = 0; i < matches.length(); i++) {
-                        JSONObject matchObject = matches.getJSONObject(i);
+                        JSONArray matches = groupObject.getJSONArray("matches");
 
-                        String name = matchObject.getString("name");
-                        int home_team = matchObject.getInt("home_team");
-                        int away_team = matchObject.getInt("away_team");
-                        int home_result = matchObject.getInt("home_result");
-                        int away_result = matchObject.getInt("away_result");
-                        String date = matchObject.getString("date");
-                        int stadium = matchObject.getInt("stadium");
-                        boolean finished = matchObject.getBoolean("finished");
-                        int matchday = matchObject.getInt("matchday");
+                        for (int k = 0; k < matches.length(); k++) {
+                            JSONObject matchObject = matches.getJSONObject(j);
+
+                            int name = matchObject.getInt("name");
+                            int home_team = matchObject.getInt("home_team");
+                            int away_team = matchObject.getInt("away_team");
+                            int home_result = matchObject.getInt("home_result");
+                            int away_result = matchObject.getInt("away_result");
+                            String date = matchObject.getString("date");
+                            int stadium = matchObject.getInt("stadium");
+                            boolean finished = matchObject.getBoolean("finished");
+                            int matchday = matchObject.getInt("matchday");
+
+                            MatchModel matchModel = new MatchModel(name, stadium,
+                                    home_team, away_team, home_result, away_result, groupName, date);
+                            databaseHelper.addMatch(matchModel);
+                        }
                     }
 
                     Intent intent = new Intent(SplashScreenActivity.this,

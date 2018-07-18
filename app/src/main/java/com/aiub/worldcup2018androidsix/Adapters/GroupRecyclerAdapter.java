@@ -2,6 +2,7 @@ package com.aiub.worldcup2018androidsix.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -78,10 +79,15 @@ public class GroupRecyclerAdapter extends
         holder.matchesText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                GroupDetailsFragment groupDetailsFragment = new GroupDetailsFragment();
+                bundle.putString("groupSelectedName", groupNames[index]);
+                groupDetailsFragment.setArguments(bundle);
+
                 FragmentTransaction fragmentTransaction =
                         ((AppCompatActivity) context).getSupportFragmentManager()
                                 .beginTransaction();
-                fragmentTransaction.replace(R.id.framlayout, new GroupDetailsFragment());
+                fragmentTransaction.replace(R.id.framlayout, groupDetailsFragment);
                 fragmentTransaction.commit();
                 ((AppCompatActivity) context)
                         .getSupportActionBar().setTitle("Group " + groupNames[index]);

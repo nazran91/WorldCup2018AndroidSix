@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class GroupDetailsFragment extends Fragment {
 
     private TabLayout groupTablayout;
     private ViewPager viewPager;
+    private String selectedGroupName;
 
     public GroupDetailsFragment() {
         // Required empty public constructor
@@ -29,6 +31,9 @@ public class GroupDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_details, container, false);
+
+        selectedGroupName = getArguments().getString("groupSelectedName");
+        Log.e("GroupDetailsFragment", selectedGroupName);
 
         viewPager = view.findViewById(R.id.groupViewPager);
         groupTablayout = view.findViewById(R.id.groupTablayout);
