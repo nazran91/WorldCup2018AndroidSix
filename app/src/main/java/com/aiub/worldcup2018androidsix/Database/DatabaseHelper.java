@@ -175,4 +175,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.close();
     }
+
+    public List<MatchModel> getAllMatches() {
+        List<MatchModel> matchList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + MATCH_TABLE_NAME + " ORDER BY " + MATCH_NAME;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                MatchModel model = new MatchModel();
+                model.setAwayResult(cursor.getInt(cursor.getColumnIndex(MATCH_AWAY_RESULT)));
+                model.setAwayTeam(cursor.getInt(cursor.getColumnIndex(MATCH_AWAY_TEAM)));
+                model.setHomeResult(cursor.getInt(cursor.getColumnIndex(MATCH_HOME_RESULT)));
+                model.setHomeTeam(cursor.getInt(cursor.getColumnIndex(MATCH_HOME_TEAM)));
+                model.setMatchName(cursor.getInt(cursor.getColumnIndex(MATCH_NAME)));
+                model.setMatchStage(cursor.getString(cursor.getColumnIndex(MATCH_STAGE)));
+                model.setMatchTime(cursor.getString(cursor.getColumnIndex(MATCH_TIME)));
+                model.setStadiumId(cursor.getInt(cursor.getColumnIndex(MATCH_STADIUM)));
+
+                matchList.add(model);
+            } while (cursor.moveToNext());
+        }
+
+        sqLiteDatabase.close();
+
+        return matchList;
+    }
+
+
 }

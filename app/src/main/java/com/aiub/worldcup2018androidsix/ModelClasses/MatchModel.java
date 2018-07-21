@@ -16,6 +16,10 @@ public class MatchModel {
         this.matchTime = matchTime;
     }
 
+    public MatchModel() {
+
+    }
+
     public int getMatchName() {
         return matchName;
     }

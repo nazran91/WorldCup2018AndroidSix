@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.aiub.worldcup2018androidsix.Adapters.GroupRecyclerAdapter;
 import com.aiub.worldcup2018androidsix.Database.DatabaseHelper;
+import com.aiub.worldcup2018androidsix.ModelClasses.MatchModel;
 import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
 
@@ -24,8 +26,20 @@ import java.util.List;
  */
 public class MatchesFragment extends Fragment {
 
+    private DatabaseHelper databaseHelper;
+    private List<MatchModel> matchList = new ArrayList<>();
+    private ListView matchListView;
+
     public MatchesFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        databaseHelper = new DatabaseHelper(getActivity());
+        matchList = databaseHelper.getAllMatches();
+        Log.e("MatchesFragment", "" + matchList.size());
     }
 
     @Override
@@ -34,6 +48,7 @@ public class MatchesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_matches, container, false);
 
+        matchListView = view.findViewById(R.id.matchListView);
 
         return view;
     }

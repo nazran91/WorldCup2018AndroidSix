@@ -149,7 +149,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         JSONArray matches = groupObject.getJSONArray("matches");
 
                         for (int k = 0; k < matches.length(); k++) {
-                            JSONObject matchObject = matches.getJSONObject(j);
+                            JSONObject matchObject = matches.getJSONObject(k);
 
                             int name = matchObject.getInt("name");
                             int home_team = matchObject.getInt("home_team");
