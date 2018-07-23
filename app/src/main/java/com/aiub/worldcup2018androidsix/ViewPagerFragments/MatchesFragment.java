@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.aiub.worldcup2018androidsix.Adapters.GroupRecyclerAdapter;
+import com.aiub.worldcup2018androidsix.Adapters.MatchesListAdapter;
 import com.aiub.worldcup2018androidsix.Database.DatabaseHelper;
 import com.aiub.worldcup2018androidsix.ModelClasses.MatchModel;
 import com.aiub.worldcup2018androidsix.ModelClasses.Team;
@@ -49,6 +50,9 @@ public class MatchesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_matches, container, false);
 
         matchListView = view.findViewById(R.id.matchListView);
+        MatchesListAdapter matchesListAdapter =
+                new MatchesListAdapter(getActivity(), matchList);
+        matchListView.setAdapter(matchesListAdapter);
 
         return view;
     }
