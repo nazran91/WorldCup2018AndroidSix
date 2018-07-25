@@ -26,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TEAM_FLAG_URL = "team_url";
     private static final String TEAM_FIFA_CODE = "team_fifa_code";
     private static final String TEAM_GROUP_NAME = "team_group_name";
+    private static final String TEAM_IS_NOTIFIED = "team_is_notified";
 
     private static final String MATCH_TABLE_NAME = "matches";
     private static final String MATCH_NAME = "match_name";
@@ -53,6 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + TEAM_NAME + " TEXT, "
                 + TEAM_FLAG_URL + " TEXT DEFAULT NULL, "
                 + TEAM_FIFA_CODE + " TEXT, "
+                + TEAM_IS_NOTIFIED + " INTEGER DEFAULT 1, "
                 + TEAM_GROUP_NAME + " TEXT DEFAULT NULL)";
         db.execSQL(CREATE_TEAM_TABLE);
 
@@ -86,6 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(TEAM_FIFA_CODE, team.getfifaCode());
         contentValues.put(TEAM_GROUP_NAME, team.getGroupName());
         contentValues.put(TEAM_FLAG_URL, team.getIcon());
+        contentValues.put(TEAM_IS_NOTIFIED, team.getIsNotified());
 
         long rowId = sqLiteDatabase.insert(TEAM_TABLE_NAME, null, contentValues);
         Log.e(TAG, "row ID " + rowId);
@@ -110,6 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 team.setfifaCode(cursor.getString(cursor.getColumnIndex(TEAM_FIFA_CODE)));
                 team.setGroupName(cursor.getString(cursor.getColumnIndex(TEAM_GROUP_NAME)));
                 team.setIcon(cursor.getString(cursor.getColumnIndex(TEAM_FLAG_URL)));
+                team.setIsNotified(cursor.getInt(cursor.getColumnIndex(TEAM_IS_NOTIFIED)));
 
                 teamList.add(team);
             } while (cursor.moveToNext());
@@ -120,14 +124,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return teamList;
     }
 
+    public Team getTeam(int teamId) {
+        Team team = new Team();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + TEAM_TABLE_NAME + " WHERE " + TEAM_ID + " = " + teamId;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                team.setId(teamId);
+                team.setName(cursor.getString(cursor.getColumnIndex(TEAM_NAME)));
+                team.setfifaCode(cursor.getString(cursor.getColumnIndex(TEAM_FIFA_CODE)));
+                team.setGroupName(cursor.getString(cursor.getColumnIndex(TEAM_GROUP_NAME)));
+                team.setIcon(cursor.getString(cursor.getColumnIndex(TEAM_FLAG_URL)));
+                team.setIsNotified(cursor.getInt(cursor.getColumnIndex(TEAM_IS_NOTIFIED)));
+            }
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return team;
+    }
+
     public void updateFlagUrl(int id, String url) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(TEAM_FLAG_URL, url);
 
-        sqLiteDatabase.update(TEAM_TABLE_NAME, contentValues,
-                TEAM_ID + " = ?", new String[]{"" + id});
+        sqLiteDatabase.update(TEAM_TABLE_NAME,
+                contentValues,
+                TEAM_ID + " = ?",
+                new String[]{"" + id});
 
         sqLiteDatabase.close();
     }

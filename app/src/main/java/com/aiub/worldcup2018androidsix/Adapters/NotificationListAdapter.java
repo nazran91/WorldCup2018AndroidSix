@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.aiub.worldcup2018androidsix.ModelClasses.NotificationItem;
+import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
 import com.squareup.picasso.Picasso;
 
@@ -16,19 +18,19 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NotificationListAdapter extends BaseAdapter{
+public class NotificationListAdapter extends BaseAdapter {
 
-    private List<NotificationItem> dataList;
+    private List<Team> teamList;
     private Context context;
 
-    public NotificationListAdapter(Context context, List<NotificationItem> dataList){
+    public NotificationListAdapter(Context context, List<Team> teamList) {
         this.context = context;
-        this.dataList = dataList;
+        this.teamList = teamList;
     }
 
     @Override
     public int getCount() {
-        return dataList.size();
+        return teamList.size();
     }
 
     @Override
@@ -48,16 +50,26 @@ public class NotificationListAdapter extends BaseAdapter{
                 .from(context)
                 .inflate(R.layout.notification_list_item, parent, false);
 
-        NotificationItem item = dataList.get(position);
+        Team item = teamList.get(position);
 
         CircleImageView flag = view.findViewById(R.id.flagIcon);
-        Picasso.get().load(item.getFlagUrl()).into(flag);
+        Picasso.get().load(item.getIcon()).into(flag);
 
         TextView countryName = view.findViewById(R.id.countryName);
         countryName.setText(item.getName());
 
         CheckBox isNotified = view.findViewById(R.id.isNotifiedCheckBox);
-        isNotified.setChecked(item.isNotified());
+        if (item.getIsNotified() == 0)
+            isNotified.setChecked(false);
+        else
+            isNotified.setChecked(true);
+
+        isNotified.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            }
+        });
 
         return view;
     }

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.aiub.worldcup2018androidsix.Adapters.NotificationListAdapter;
+import com.aiub.worldcup2018androidsix.Database.DatabaseHelper;
 import com.aiub.worldcup2018androidsix.ModelClasses.NotificationItem;
+import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class NotificationsActivity extends AppCompatActivity {
     private static final String TAG = NotificationsActivity.class.getSimpleName();
     private ListView notificationsListView;
     private List<NotificationItem> dataList = new ArrayList<>();
+    private List<Team> teamList = new ArrayList<>();
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +30,12 @@ public class NotificationsActivity extends AppCompatActivity {
 
         notificationsListView = findViewById(R.id.notificationsListView);
 
-        makeDataReady();
+        //makeDataReady();
+        databaseHelper = new DatabaseHelper(NotificationsActivity.this);
+        teamList = databaseHelper.getAllTeams();
 
         NotificationListAdapter adapter = new NotificationListAdapter(
-                NotificationsActivity.this, dataList);
+                NotificationsActivity.this, teamList);
         notificationsListView.setAdapter(adapter);
 
     }

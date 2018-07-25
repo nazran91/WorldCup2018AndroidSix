@@ -133,7 +133,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         if (i % 4 == 0 && i != 0) {
                             j++;
                         }
-                        Team team = new Team(id, name, fifaCode, groupNames[j], null);
+                        Team team = new Team(id, 1, name, fifaCode, groupNames[j], null);
                         databaseHelper.addTeam(team);
                     }
 

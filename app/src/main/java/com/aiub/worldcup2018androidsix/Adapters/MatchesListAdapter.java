@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.aiub.worldcup2018androidsix.Database.DatabaseHelper;
 import com.aiub.worldcup2018androidsix.ModelClasses.MatchModel;
+import com.aiub.worldcup2018androidsix.ModelClasses.Team;
 import com.aiub.worldcup2018androidsix.R;
+import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 
 import java.text.ParseException;
@@ -24,6 +27,7 @@ public class MatchesListAdapter extends BaseAdapter {
     private Context context;
     private List<MatchModel> matchModelList;
     private Date date;
+    private DatabaseHelper databaseHelper;
 
     public MatchesListAdapter(Context context, List<MatchModel> matchModelList) {
         this.context = context;
@@ -58,7 +62,7 @@ public class MatchesListAdapter extends BaseAdapter {
                 parent, false);
 
         TextView groupName = view.findViewById(R.id.groupName);
-        TextView homeName = view.findViewById(R.id.homeTeamName);
+        TextView homeTeamName = view.findViewById(R.id.homeTeamName);
         TextView homeGoal = view.findViewById(R.id.homeGoal);
         TextView awayTeamName = view.findViewById(R.id.awayTeamName);
         TextView awayGoal = view.findViewById(R.id.awayGoal);
@@ -68,16 +72,21 @@ public class MatchesListAdapter extends BaseAdapter {
 
         MatchModel matchModel = matchModelList.get(position);
 
+        databaseHelper = new DatabaseHelper(context);
+        Team homeTeam = databaseHelper.getTeam(matchModel.getHomeTeam());
+        Team awayTeam = databaseHelper.getTeam(matchModel.getAwayTeam());
+
         convertStringToDate(matchModel.getMatchTime());
 
         matchTime.setReferenceTime(date.getTime());
         groupName.setText(matchModel.getMatchStage());
-        //homeName.setText(matchModel.getHomeTeam());
+        homeTeamName.setText(homeTeam.getName());
+        awayTeamName.setText(awayTeam.getName());
         homeGoal.setText("" + matchModel.getHomeResult());
         awayGoal.setText("" + matchModel.getAwayResult());
-        //awayTeamName.setText(matchModel.getAwayTeam());
-        //homeTeamFlag.setText(matchModel);
-        //awayTeamFlag.setText();
+
+        Glide.with(context).load(homeTeam.getIcon()).into(homeTeamFlag);
+        Glide.with(context).load(awayTeam.getIcon()).into(awayTeamFlag);
 
         return view;
     }
@@ -88,7 +97,7 @@ public class MatchesListAdapter extends BaseAdapter {
         //String dtStart = "2018-06-25T18:00:00+04:00";
         String dtStart = matchTime;
         SimpleDateFormat format =
-                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'GMT'+HH:mm");
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZ");
         try {
             date = format.parse(dtStart);
 

@@ -2,12 +2,13 @@ package com.aiub.worldcup2018androidsix.ModelClasses;
 
 public class Team {
 
-    private int id;
+    private int id, isNotified;
     private String icon, name, fifaCode, groupName;
 
-    public Team(){
+    public Team() {
 
     }
+
     //ALT + Insert
     public Team(int id, String icon, String name, String fifaCode) {
         this.id = id;
@@ -16,12 +17,21 @@ public class Team {
         this.fifaCode = fifaCode;
     }
 
-    public Team(int id, String name, String fifaCode, String groupName, String icon){
+    public Team(int id, int isNotified, String name, String fifaCode, String groupName, String icon) {
         this.id = id;
+        this.isNotified = isNotified;
         this.name = name;
         this.fifaCode = fifaCode;
         this.groupName = groupName;
         this.icon = icon;
+    }
+
+    public int getIsNotified() {
+        return isNotified;
+    }
+
+    public void setIsNotified(int isNotified) {
+        this.isNotified = isNotified;
     }
 
     public String getGroupName() {

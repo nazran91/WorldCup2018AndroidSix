@@ -9,11 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <view
+<!--        <view
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_centerVertical="true"
-            android:background="#E0E0E0" />
+            android:background="#E0E0E0" />-->
 
         <com.github.curioustechizen.ago.RelativeTimeTextView
             android:id="@+id/matchTime"
